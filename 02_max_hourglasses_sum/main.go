@@ -17,8 +17,54 @@ import (
  */
 
 func hourglassSum(arr [][]int32) int32 {
+	var width, height = getMatrixlength(arr)
+	var sum, maxSum int32
+	maxSum = hourglassIndexSum(arr, 0, 0)
+	indexWidthLimitForHourglass := (width / 2)
+	indexHeightLimitForHourglass := (height / 2)
+	// fmt.Printf("First maxsum: %d\n", maxSum)
+	for i := int32(0); i <= indexWidthLimitForHourglass; i += 1 {
+		for j := int32(0); j <= indexHeightLimitForHourglass; j += 1 {
+			sum = hourglassIndexSum(arr, i, j)
+			if sum > maxSum {
+				maxSum = sum
+			}
+		}
+	}
 	// Write your code here
-	return 0
+	return maxSum
+}
+
+/*
+ *
+ * Given the array and a base index
+ * Returns the sum of hourglass for that index base
+ * If there is a not complete hourglass into the index, throws a panic
+ */
+func hourglassIndexSum(arr [][]int32, i, j int32) int32 {
+	var iLimit, jLimit, sum int32
+	iLimit = i + 3
+	jLimit = j + 3
+	jOriginal := j
+	for ; i < iLimit; i += 1 {
+		// fmt.Printf("Visiting arr[%d]\n", i)
+		for j = jOriginal; j < jLimit; j += 1 {
+			if (iLimit-i) == 2 && ((jLimit-j == 3) || (jLimit-j == 1)) {
+				// fmt.Printf("\tIgnoring value for arr[%d][%d]\n", i, j)
+				sum += 0
+			} else {
+				// fmt.Printf("\tAgregating value for arr[%d][%d]=[%d]\n", i, j, arr[i][j])
+				sum += arr[i][j]
+			}
+		}
+	}
+	return sum
+}
+
+func getMatrixlength(arr [][]int32) (int32, int32) {
+	width := len(arr)
+	height := len(arr[0])
+	return int32(width), int32(height)
 }
 
 func main() {
