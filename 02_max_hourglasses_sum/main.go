@@ -10,19 +10,15 @@ import (
 )
 
 /*
- * Complete the 'hourglassSum' function below.
- *
  * The function is expected to return an INTEGER.
  * The function accepts 2D_INTEGER_ARRAY arr as parameter.
  */
-
 func hourglassSum(arr [][]int32) int32 {
 	var width, height = getMatrixlength(arr)
 	var sum, maxSum int32
 	maxSum = hourglassIndexSum(arr, 0, 0)
 	indexWidthLimitForHourglass := (width / 2)
 	indexHeightLimitForHourglass := (height / 2)
-	// fmt.Printf("First maxsum: %d\n", maxSum)
 	for i := int32(0); i <= indexWidthLimitForHourglass; i += 1 {
 		for j := int32(0); j <= indexHeightLimitForHourglass; j += 1 {
 			sum = hourglassIndexSum(arr, i, j)
@@ -31,7 +27,6 @@ func hourglassSum(arr [][]int32) int32 {
 			}
 		}
 	}
-	// Write your code here
 	return maxSum
 }
 
@@ -47,13 +42,10 @@ func hourglassIndexSum(arr [][]int32, i, j int32) int32 {
 	jLimit = j + 3
 	jOriginal := j
 	for ; i < iLimit; i += 1 {
-		// fmt.Printf("Visiting arr[%d]\n", i)
 		for j = jOriginal; j < jLimit; j += 1 {
 			if (iLimit-i) == 2 && ((jLimit-j == 3) || (jLimit-j == 1)) {
-				// fmt.Printf("\tIgnoring value for arr[%d][%d]\n", i, j)
 				sum += 0
 			} else {
-				// fmt.Printf("\tAgregating value for arr[%d][%d]=[%d]\n", i, j, arr[i][j])
 				sum += arr[i][j]
 			}
 		}
